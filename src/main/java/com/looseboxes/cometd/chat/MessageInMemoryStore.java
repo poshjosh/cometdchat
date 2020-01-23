@@ -21,10 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.BiFunction;
 import java.util.logging.Logger;
 
 /**
@@ -34,23 +32,18 @@ public class MessageInMemoryStore<M> implements Serializable,
         MessageConsumer<M>, MessageStore<M> {
     
     private transient static final Logger LOG = 
-            Logger.getLogger(MessageConsumerImpl.class.getName());
+            Logger.getLogger(MessageInMemoryStore.class.getName());
     
     private final Lock lock = new ReentrantLock();
     
     private final Map<Map.Entry<String, String>, List<M>> messageCache;
-    
-    private final BiFunction<String, String, List<M>> listSupplier;
 
     public MessageInMemoryStore() {
-        this(new HashMap(), (from, to) -> new ArrayList());
+        this(new HashMap());
     }
     
-    public MessageInMemoryStore(
-            Map<Map.Entry<String, String>, List<M>> messageCache,
-            BiFunction<String, String, List<M>> listSupplier) {
+    public MessageInMemoryStore(Map<Map.Entry<String, String>, List<M>> messageCache) {
         this.messageCache = Collections.synchronizedMap(messageCache);
-        this.listSupplier = Objects.requireNonNull(listSupplier);
     }
     
     @Override
@@ -100,7 +93,7 @@ public class MessageInMemoryStore<M> implements Serializable,
         final Map.Entry<String, String> key = this.toEntry(from, to);
         List<M> cachedMessages = this.messageCache.get(key);
         if(cachedMessages == null && createIfNone) {
-            cachedMessages = listSupplier.apply(from, to);
+            cachedMessages = new ArrayList();
             LOG.fine(() -> "Created new message list for: " + key);
             this.messageCache.put(key, cachedMessages);
         }
