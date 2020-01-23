@@ -40,27 +40,27 @@ public class CometdContextImpl implements Serializable, CometdContext {
 
     private final BiFunction<ServerMessage.Mutable, ?, ?> messageFormatter;
     
-    private final PrivateMessageConsumer messageConsumer;
+    private final MessageStore messageStore;
     
     public CometdContextImpl(ServletContext context) {
         this(
                 context, 
                 new DefaultMessageFormatter(), 
-                new PrivateMessageConsumerLocalDiscStore(context));
+                new MessageInMemoryStore());
     }
 
     public CometdContextImpl(
             ServletContext context,
             BiFunction<ServerMessage.Mutable, ?, ?> messageFormatter, 
-            PrivateMessageConsumer messageConsumer) {
+            MessageStore messageStore) {
         this.appName = new GetAppName().apply(context);
         LOG.info(() -> "Initializing chat app named: " + appName);
         this.appDir = new GetAppDir().apply(context, appName);
         this.messageFormatter = Objects.requireNonNull(messageFormatter);
-        this.messageConsumer = Objects.requireNonNull(messageConsumer);
+        this.messageStore = Objects.requireNonNull(messageStore);
         LOG.fine(() -> "Done initializing chat app.");
         
-        context.setAttribute(ChatAttributeNames.COMETD_CHAT_APP, CometdContextImpl.this);
+        context.setAttribute(ChatAttributeNames.COMETD_CONTEXT, CometdContextImpl.this);
     }
 
     @Override
@@ -77,15 +77,9 @@ public class CometdContextImpl implements Serializable, CometdContext {
     public BiFunction<ServerMessage.Mutable, ?, ?> getMessageFormatter() {
         return messageFormatter;
     }
-
-    @Override
-    public PrivateMessageConsumer getMessageConsumer() {
-        return messageConsumer;
-    }
-
     
     @Override
-    public PrivateMessageStore getMessageStore() {
-        return messageConsumer.getStore();
+    public MessageStore getMessageStore() {
+        return messageStore;
     }
 }
