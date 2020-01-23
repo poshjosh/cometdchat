@@ -30,7 +30,7 @@ import org.cometd.bayeux.server.ServerMessage;
 /**
  * @author Chinomso Bassey Ikwuagwu on May 19, 2018 7:11:09 PM
  */
-public class CometdContextImpl implements Serializable {
+public class CometdContextImpl implements Serializable, CometdContext {
 
     private transient static final Logger LOG = Logger.getLogger(CometdContextImpl.class.getName());
     
@@ -63,23 +63,28 @@ public class CometdContextImpl implements Serializable {
         context.setAttribute(ChatAttributeNames.COMETD_CHAT_APP, CometdContextImpl.this);
     }
 
+    @Override
     public String getAppName() {
         return appName;
     }
 
+    @Override
     public File getAppDir() {
         return appDir;
     }
 
+    @Override
     public BiFunction<ServerMessage.Mutable, ?, ?> getMessageFormatter() {
         return messageFormatter;
     }
 
+    @Override
     public PrivateMessageConsumer getMessageConsumer() {
         return messageConsumer;
     }
 
     
+    @Override
     public PrivateMessageStore getMessageStore() {
         return messageConsumer.getStore();
     }
