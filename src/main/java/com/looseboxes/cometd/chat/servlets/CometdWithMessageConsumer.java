@@ -45,15 +45,15 @@ public class CometdWithMessageConsumer extends AnnotationCometdServlet {
         
         try{
 
-            final CometdContext chatapp = (CometdContext)this.getServletContext()
+            final CometdContext cometdContext = (CometdContext)this.getServletContext()
                     .getAttribute(ChatAttributeNames.COMETD_CONTEXT);
                 
-            final MessageStore messageStore = chatapp.getMessageStore();
+            final MessageStore messageStore = cometdContext.getMessageStore();
 
             if(messageStore != null) {
                 
                 final BiFunction<ServerMessage.Mutable, ?, ?> messageFormatter = 
-                        chatapp.getMessageFormatter();
+                        cometdContext.getMessageFormatter();
                 
                 Objects.requireNonNull(messageFormatter);
 

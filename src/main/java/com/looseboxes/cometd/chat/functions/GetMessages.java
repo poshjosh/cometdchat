@@ -25,6 +25,7 @@ import java.util.function.BiFunction;
 import javax.servlet.ServletContext;
 import com.looseboxes.cometd.chat.ChatAttributeNames;
 import com.looseboxes.cometd.chat.CometdContext;
+import com.looseboxes.cometd.chat.MessageStore;
 
 /**
  * @author Chinomso Bassey Ikwuagwu on May 19, 2018 5:17:13 PM
