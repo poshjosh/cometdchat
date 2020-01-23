@@ -22,6 +22,4 @@ package com.looseboxes.cometd.chat;
 public interface MessageConsumer<M> {
 
     boolean accept(String from, String to, M message);
-    
-    MessageStore<M> getStore();
 }

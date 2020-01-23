@@ -60,11 +60,6 @@ public class MessageInMemoryStore<M> implements Serializable,
             lock.unlock();
         }
     }
-
-    @Override
-    public MessageStore<M> getStore() {
-        return this;
-    }
     
     public List<M> remove(String from, String to) {
         final Map.Entry<String, String> key = this.toEntry(from, to);
