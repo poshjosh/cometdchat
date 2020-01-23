@@ -11,6 +11,15 @@ You will be able to chat with any user who browses to your web site directly.
 ### Setp 2. Add the xml below to your web.xml
 
 ```xml
+    <!-- Servlet to query chat members -->
+    <servlet>
+        <servlet-name>ChatMembers</servlet-name>
+        <servlet-class>com.looseboxes.cometd.chat.web.ChatMembers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChatMembers</servlet-name>
+        <url-pattern>/chatMembers</url-pattern>
+    </servlet-mapping>
     <!-- Servlet to query cometd chat messages -->
     <servlet>
         <servlet-name>messages</servlet-name>
