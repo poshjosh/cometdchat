@@ -16,8 +16,8 @@
 
 package com.looseboxes.cometd.chat.servlets;
 
-import com.bc.util.JsonBuilder;
 import com.looseboxes.cometd.chat.ChatMessageDataNames;
+import com.looseboxes.cometd.chat.JsonBuilder;
 import com.looseboxes.cometd.chat.functions.GetMessages;
 import java.io.IOException;
 import java.io.PrintWriter;
