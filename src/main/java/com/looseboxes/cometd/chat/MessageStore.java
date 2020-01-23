@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Chinomso Bassey Ikwuagwu on May 18, 2018 7:46:06 PM
  */
-public interface MessageStore<M> {
+public interface MessageStore<M> extends MessageConsumer<M>{
     
     List<M> get(String from, String to);
 }
