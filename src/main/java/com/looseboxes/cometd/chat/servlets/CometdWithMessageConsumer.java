@@ -26,8 +26,8 @@ import org.cometd.annotation.AnnotationCometdServlet;
 import org.cometd.bayeux.server.ServerMessage;
 import org.cometd.server.BayeuxServerImpl;
 import com.looseboxes.cometd.chat.ChatAttributeNames;
-import com.looseboxes.cometd.chat.CometdChat;
-import com.looseboxes.cometd.chat.PrivateMessageConsumer;
+import com.looseboxes.cometd.chat.CometdContext;
+import com.looseboxes.cometd.chat.MessageConsumer;
 
 /**
  * @author Chinomso Bassey Ikwuagwu on May 18, 2018 5:53:46 PM
@@ -45,10 +45,10 @@ public class CometdWithMessageConsumer extends AnnotationCometdServlet {
         
         try{
 
-            final CometdChat chatapp = (CometdChat)this.getServletContext()
-                    .getAttribute(ChatAttributeNames.COMETD_CHAT_APP);
+            final CometdContext chatapp = (CometdContext)this.getServletContext()
+                    .getAttribute(ChatAttributeNames.COMETD_CONTEXT);
                 
-            final PrivateMessageConsumer messageConsumer = chatapp.getMessageConsumer();
+            final MessageConsumer messageConsumer = chatapp.getMessageConsumer();
 
             if(messageConsumer != null) {
                 
