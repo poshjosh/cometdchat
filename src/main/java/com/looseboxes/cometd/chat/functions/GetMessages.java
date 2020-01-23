@@ -34,7 +34,7 @@ public class GetMessages implements Serializable, BiFunction<String, String, Map
     private final PrivateMessageStore<?> messageStore;
 
     public GetMessages(ServletContext context) {
-        this(((CometdChat)context.getAttribute(ChatAttributeNames.COMETD_CHAT_APP)).getMessageConsumer().getStore());
+        this(((CometdChat)context.getAttribute(ChatAttributeNames.COMETD_CHAT_APP)).getMessageStore());
     }
     
     public GetMessages(PrivateMessageStore<?> messageStore) {

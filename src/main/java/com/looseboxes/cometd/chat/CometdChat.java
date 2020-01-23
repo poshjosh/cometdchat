@@ -78,4 +78,9 @@ public class CometdChat implements Serializable {
     public PrivateMessageConsumer getMessageConsumer() {
         return messageConsumer;
     }
+
+    
+    public PrivateMessageStore getMessageStore() {
+        return messageConsumer.getStore();
+    }
 }

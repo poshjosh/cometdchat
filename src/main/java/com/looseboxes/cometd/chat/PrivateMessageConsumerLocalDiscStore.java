@@ -26,12 +26,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 
 /**
  * @author Chinomso Bassey Ikwuagwu on May 19, 2018 1:09:27 PM
  */
 public class PrivateMessageConsumerLocalDiscStore extends PrivateMessageConsumerImpl{
+
+    private static final Logger LOG = Logger.getLogger(PrivateMessageConsumerLocalDiscStore.class.getName());
     
     private static final class GetMessagesDir {
         
@@ -87,7 +91,11 @@ public class PrivateMessageConsumerLocalDiscStore extends PrivateMessageConsumer
                     fileBasedList.forEach((e) -> output.add(e));
                 }
             }finally{
-                fileBasedList.close();
+                try{
+                    fileBasedList.close();
+                }catch(IOException e) {
+                    LOG.log(Level.WARNING, "Exception closing file based list", e);
+                }
             }
         }
         return output;
