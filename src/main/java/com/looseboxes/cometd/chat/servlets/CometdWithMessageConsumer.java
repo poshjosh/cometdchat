@@ -27,7 +27,7 @@ import org.cometd.bayeux.server.ServerMessage;
 import org.cometd.server.BayeuxServerImpl;
 import com.looseboxes.cometd.chat.ChatAttributeNames;
 import com.looseboxes.cometd.chat.CometdContext;
-import com.looseboxes.cometd.chat.MessageConsumer;
+import com.looseboxes.cometd.chat.MessageStore;
 
 /**
  * @author Chinomso Bassey Ikwuagwu on May 18, 2018 5:53:46 PM
@@ -48,9 +48,9 @@ public class CometdWithMessageConsumer extends AnnotationCometdServlet {
             final CometdContext chatapp = (CometdContext)this.getServletContext()
                     .getAttribute(ChatAttributeNames.COMETD_CONTEXT);
                 
-            final MessageConsumer messageConsumer = chatapp.getMessageConsumer();
+            final MessageStore messageStore = chatapp.getMessageStore();
 
-            if(messageConsumer != null) {
+            if(messageStore != null) {
                 
                 final BiFunction<ServerMessage.Mutable, ?, ?> messageFormatter = 
                         chatapp.getMessageFormatter();
@@ -64,7 +64,7 @@ public class CometdWithMessageConsumer extends AnnotationCometdServlet {
                 };
 
                 bayeuxServer.addExtension(new BayeuxServerExtensionForCollectingMessages(
-                        hasValue, usersTest, messageFormatter, messageConsumer)
+                        hasValue, usersTest, messageFormatter, messageStore)
                 );
             }
             
