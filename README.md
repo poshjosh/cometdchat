@@ -72,14 +72,74 @@ public void contextInitialized(ServletContextEvent servletContextEvent) {
 
     final ServletContext servletContext = servletContextEvent.getServletContext();    
 
-    final CometdChat cometdChat = new CometdChat(servletContext);
+    final CometdContext cometdChat = new CometdContextImpl(servletContext);
 }
 ```
 
-### Setp 4. Add this to the head section of any jsp or jspf page you want chat to be available from
+### Setp 4. Add to HTML Page
 
-```xml
-<%@taglib uri="/META-INF/tlds/cometdchat" prefix="cometdchat"%>
-<cometdchat:joinChat loginUserDisplayName="me" windowBackground="navy"/>
+Sample HTML page incorporating the chat functionality
+
+- comet.chat.css : The CSS file
+- main.js        : The javascript file     
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="comet.chat.css"/>
+        <title>Chat</title>
+    </head>
+    <body>
+        
+        <form>
+            <b>Join Chat</b>
+            <p>
+                Username: <input type="text" name="chatuser" id="chatuser"/>
+                <div id="chatuserMessage"></div>
+            </p>
+            <p><input type="button" onclick="joinChatRoom();" value="Join Chat"></p>
+        </form>
+
+        <div>Online Users <small>(Click a <em>username</em> to chat)</small></div>
+
+        <div id="members" class="larger border0 spaced marginbottom"></div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript">
+            
+            $(document).ready(function(){ 
+                
+                var baseUrl = location.protocol + "//" + location.host;
+                var contextPath = ''; 
+                var contextUrl = baseUrl + contextPath;
+                
+                var config = {
+                    /** 'id' of a 'div' or 'span' tag which keeps list of online users */
+                    memberListContainerID: 'members',       /** required = false */
+                    userDisplayName: 'me',                  /** required = false */
+                    windowBackground: '#31B404',            /** required = false */
+                    logLevel: 'warn',                       /** required = false, [warn|info|debug], default=info */
+                    chat: {channel:'/service/privatechat', room: '/chat/demo', endpoint: contextUrl + "/cometd"},
+                    members: {channel:'/service/members', room:'/members/demo', endpoint: contextUrl + "/chatMembers"}
+                };
+                
+                bcCometd.init(config);
+                
+                var username = $('#chatuser').val();
+                
+                if(!username) {
+                    $('#chatuser').html("Invalid username: " + username);
+                    return;
+                }
+                
+                bcCometd.joinChat(username, function(){
+                    window.alert("Successfully joined chat as: " + username);
+                });
+            });
+        </script>
+    </body>
+</html>
 ```
 
