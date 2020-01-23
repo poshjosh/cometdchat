@@ -16,7 +16,6 @@
 
 package com.looseboxes.cometd.chat.functions;
 
-import com.looseboxes.cometd.chat.PrivateMessageStore;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -24,20 +23,21 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import javax.servlet.ServletContext;
 import com.looseboxes.cometd.chat.ChatAttributeNames;
-import com.looseboxes.cometd.chat.CometdChat;
+import com.looseboxes.cometd.chat.CometdContext;
+import com.looseboxes.cometd.chat.MessageStore;
 
 /**
  * @author Chinomso Bassey Ikwuagwu on May 19, 2018 5:17:13 PM
  */
 public class GetMessages implements Serializable, BiFunction<String, String, Map> {
 
-    private final PrivateMessageStore<?> messageStore;
+    private final MessageStore<?> messageStore;
 
     public GetMessages(ServletContext context) {
-        this(((CometdChat)context.getAttribute(ChatAttributeNames.COMETD_CHAT_APP)).getMessageStore());
+        this(((CometdContext)context.getAttribute(ChatAttributeNames.COMETD_CONTEXT)).getMessageStore());
     }
     
-    public GetMessages(PrivateMessageStore<?> messageStore) {
+    public GetMessages(MessageStore<?> messageStore) {
         this.messageStore = messageStore;
     }
     
