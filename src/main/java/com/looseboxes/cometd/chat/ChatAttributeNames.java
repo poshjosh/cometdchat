@@ -20,7 +20,7 @@ package com.looseboxes.cometd.chat;
  * @author Chinomso Bassey Ikwuagwu on May 18, 2018 11:57:04 PM
  */
 public interface ChatAttributeNames {
-    String COMETD_CHAT_APP = "CometdChatApp";
+    String COMETD_CONTEXT = "CometdContext";
     String APP_NAME = "cometdChatAppName";
     String APP_DIR = "cometdChatAppDir";
 }
