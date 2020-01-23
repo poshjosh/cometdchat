@@ -44,7 +44,7 @@ public class BayeuxServerExtensionForCollectingMessages<M>
     
     private final BiFunction<ServerMessage.Mutable, M, M> messageFormatter;
     
-    private final PrivateMessageConsumer<M> messageConsumer;
+    private final MessageConsumer<M> messageConsumer;
     
     private final BiFunction<Map, String, String> getChatFromMessageData;
 
@@ -52,7 +52,7 @@ public class BayeuxServerExtensionForCollectingMessages<M>
             Predicate<String> messageTest,
             BiPredicate<String, String> usersTest,
             BiFunction<ServerMessage.Mutable, M, M> messageFormatter,
-            PrivateMessageConsumer<M> messageConsumer) {
+            MessageConsumer<M> messageConsumer) {
         this.messageTest = Objects.requireNonNull(messageTest);
         this.usersTest = Objects.requireNonNull(usersTest);
         this.messageFormatter = Objects.requireNonNull(messageFormatter);
