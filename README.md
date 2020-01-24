@@ -14,7 +14,7 @@ You will be able to chat with any user who browses to your web site directly.
     <!-- Servlet to query chat members -->
     <servlet>
         <servlet-name>ChatMembers</servlet-name>
-        <servlet-class>com.looseboxes.cometd.chat.web.ChatMembers</servlet-class>
+        <servlet-class>com.looseboxes.cometd.chat.servlets.ChatMembers</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatMembers</servlet-name>
