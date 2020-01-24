@@ -1,0 +1,29 @@
+{
+    "name": "cometdchat",
+    "version": "1.0.0",
+    "description": "",
+    "license": "SEE LICENSE IN LICENSE",
+    "homepage": "https://github.com/poshjosh/cometdchat",
+    "browser": "src/main/resources/META-INF/resources/main.js",
+    "private": true,
+    "scripts": {
+        "test": "mocha **/*.test.js",
+        "build": "webpack"
+    },
+    "keywords": [
+        "cometd",
+        "chat",
+        "web"
+    ],
+    "author": "Chinomso Ikwuagwu",
+    "contributors": [],
+    "dependencies": {
+        "jquery": "^3.4.1",
+        "cometd": "^4.0.6"
+    },
+    "devDependencies": {
+        "mocha": "^7.0.0",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10"
+    }
+}
