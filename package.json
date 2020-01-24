@@ -8,7 +8,9 @@
     "private": true,
     "scripts": {
         "test": "mocha **/*.test.js",
-        "build": "webpack"
+        "build": "webpack",
+        "build:dev": "webpack --env dev",
+        "build:prod": "webpack --env prod"
     },
     "keywords": [
         "cometd",
