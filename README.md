@@ -2,6 +2,8 @@
 
 ### A Java library for integrating Cometd based chat functionality into a Java Web Application
 
+Java-Maven backend and Nodejs-Webpack frontend
+
 ## Usage
 This will add chat functionality to your existing java web application.
 You will be able to chat with any user who browses to your web site directly.
@@ -87,59 +89,105 @@ Sample HTML page incorporating the chat functionality
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Chat Page</title>
         <link type="text/css" rel="stylesheet" href="comet.chat.css"/>
-        <title>Chat</title>
     </head>
     <body>
         
         <form>
-            <b>Join Chat</b>
             <p>
-                Username: <input type="text" name="chatuser" id="chatuser"/>
-                <div id="chatuserMessage"></div>
+                Username: <input type="text" name="chatuser" id="chatuser"/><span id="chatuserMessage"></span>
             </p>
-            <p><input type="button" onclick="joinChatRoom();" value="Join Chat"></p>
+            <p><input type="button" onclick="joinChatRoom('chatuser');" value="Join Chat"></p>
         </form>
 
         <div>Online Users <small>(Click a <em>username</em> to chat)</small></div>
 
-        <div id="members" class="larger border0 spaced marginbottom"></div>
-
+        <div id="members"></div>
+        
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="main.js"></script>
         <script type="text/javascript">
             
             $(document).ready(function(){ 
                 
-                var baseUrl = location.protocol + "//" + location.host;
-                var contextPath = ''; 
-                var contextUrl = baseUrl + contextPath;
-                
                 var config = {
                     /** 'id' of a 'div' or 'span' tag which keeps list of online users */
-                    memberListContainerID: 'members',       /** required = false */
-                    userDisplayName: 'me',                  /** required = false */
-                    windowBackground: '#31B404',            /** required = false */
-                    logLevel: 'warn',                       /** required = false, [warn|info|debug], default=info */
-                    chat: {channel:'/service/privatechat', room: '/chat/demo', endpoint: contextUrl + "/cometd"},
-                    members: {channel:'/service/members', room:'/members/demo', endpoint: contextUrl + "/chatMembers"}
+                    memberListContainerID: 'members',   /** required = false, text */
+                    userDisplayName: 'me',              /** required = false, text */
+                    windowBackground: '#31B404',        /** required = false, color */
+                    logLevel: 'debug'                   /** required = false, [warn|info|debug], default=info */
                 };
                 
                 bcCometd.init(config);
+            });
+            
+            function joinChatRoom(usernameElemId) {
                 
-                var username = $('#chatuser').val();
+                var username = $('#' + usernameElemId).val();
                 
                 if(!username) {
-                    $('#chatuser').html("Invalid username: " + username);
-                    return;
-                }
+                    
+                    $("#" + usernameElemId + "Message").css("color", "red").val("Invalid username");
+
+                }else{
                 
-                bcCometd.joinChat(username, function(){
-                    window.alert("Successfully joined chat as: " + username);
-                });
-            });
+                    bcCometd.joinChat(username, function(){
+
+                        $("#" + usernameElemId + "Message").css("color", "green").val("Successfully joined chat as: " + username);
+                    });
+                }
+            }
         </script>
     </body>
 </html>
 ```
+
+## Building the javascript file from the Nodejs-Webpack frontend
+
+To build a javascript for integrating Cometd based chat functionality into Java Web Apps:
+
+- Open command prompt
+
+- Change to the project folder, e.g:
+
+```
+>cd C:\Users\USER\Documents\NetBeansProjects\cometdchat
+```
+
+- Install some required scripts
+
+```
+npm install jquery
+npm install cometd
+```
+
+- Run command: npm run build, e.g:
+
+```
+C:\Users\USER\Documents\NetBeansProjects\cometdchat>npm run build
+```
+
+The npm run build command does the following:
+
+1. Packages script at src/index.js with all dependencies.
+
+2. Minifies the packaged/combined script and saves it to dist/main.js
+
+### Structure of output
+
+- dist
+    - index.html
+    - main.js
+    - sounds
+        - beep.m4a
+        - beep.mp3
+        - beep.ogg
+        - beep.wav
+- src
+    - index.js
+
+### Sample index.html 
+Put the link to the script at the bottom of the page, inside the body tag
+
 
