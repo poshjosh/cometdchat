@@ -162,10 +162,10 @@ npm install jquery
 npm install cometd
 ```
 
-- Run command: npm run build, e.g:
+- Run command: npm run build:[ MODE = (dev|prod) ], e.g:
 
 ```
-C:\Users\USER\Documents\NetBeansProjects\cometdchat>npm run build
+C:\Users\USER\Documents\NetBeansProjects\cometdchat>npm run build:dev
 ```
 
 The npm run build command does the following:
